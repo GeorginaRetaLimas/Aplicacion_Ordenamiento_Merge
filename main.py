@@ -11,8 +11,7 @@ async def app(scope, receive, send):
             with open("index.html", "r", encoding="utf-8") as f:
                 html = f.read()
 
-            # Como es get no procesamos y no hacemos nada
-            html = html.replace("{{resultado}}", "")
+            html = html.replace("{{resultado_get}}", "")
         
         elif scope["method"] == "POST":
 
@@ -24,38 +23,26 @@ async def app(scope, receive, send):
                 event = await receive()
                 body += event.get("body", b"")
 
-                # Si ya no hay mas body paramos
                 if not event.get("more_body"):
                     break
 
             # De bytes pasamos los datos a string para tener la lista
             datos = body.decode()
-
-            # Dividimos la lista entre el "=" y tomamos la posición uno con los numeros
             datos_numeros = datos.split("=")[1]
-
-            # Decodificamos la URL para convertir los + en espacios
             datos_numeros = urllib.parse.unquote_plus(datos_numeros)
 
-            # Lista para los numeros en float
             lista = []
 
-            # Recorremos separando cada elemento por la coma
             for x in datos_numeros.split(","):
-                # Quitamos los espacios antes y después
                 numero = x.strip()
 
-                # Si el numero no es null 
                 if numero != "":
-                    # Lo convertimos a float
                     lista.append(float(numero))
 
                 
-            # Si hay elementos en la lista la mandamos al merge_sort
             if len(lista) > 0:
                 await merge_sort(lista, 0, len(lista)-1)
 
-            # Convertimos el resultado a string
             resultado = ", ".join(str(x) for x in lista)
 
             with open("index.html", "r", encoding="utf-8") as f:
