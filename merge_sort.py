@@ -1,4 +1,5 @@
 import asyncio
+from merge import merge
 
 # A -> Arreglo
 # p -> indice inicio

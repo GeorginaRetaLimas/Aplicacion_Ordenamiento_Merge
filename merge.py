@@ -30,17 +30,18 @@ async def merge(A, p, q, r):
         else: # Si el elemento derecho es menor
             A[k] = R[j]
             j += 1
+        k +=1
     
     # Si quedan elementos en L
-    while i < nL
+    while i < nL:
         # Copiamos lo que quede en L
         A[k] = L[i]
         i += 1
         k += 1
     
     # Si quedan elementos en R
-    while i < nR
+    while j < nR:
         # Copiamos lo que quede en R
-        A[k] = R[i]
+        A[k] = R[j]
         j += 1
         k += 1
